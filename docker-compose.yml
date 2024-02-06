@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  web:
+    image: php-mysqli
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    restart: no
+    
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    volumes:
+      - ./db:/var/lib/mysql # Persist data
+    restart: no
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    restart: no
